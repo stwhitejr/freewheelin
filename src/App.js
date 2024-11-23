@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { db } from "./firebase";
+import { collection, getDocs } from "firebase/firestore";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(collection(db, "test"));
+      const documents = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setData(documents);
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(data)
+
+  return <div>hello world</div>
 }
 
 export default App;
