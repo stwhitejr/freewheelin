@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
+import useGetPhotos from "./useGetPhotos";
 
 const App = () => {
+  const file = useGetPhotos();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -16,6 +18,7 @@ const App = () => {
   }, []);
 
   console.log(data)
+  console.log(file)
 
   return <div>hello world</div>
 }
