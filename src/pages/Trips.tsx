@@ -1,9 +1,7 @@
 import PageWrapper from '../components/PageWrapper';
 import {ParallaxBannerLayer} from 'react-scroll-parallax';
 
-export interface HomeProps {}
-
-const Home = (props: HomeProps) => {
+const Trips = () => {
   return (
     <PageWrapper
       includeHeader
@@ -41,4 +39,4 @@ const Home = (props: HomeProps) => {
   );
 };
 
-export default Home;
+export default Trips;
