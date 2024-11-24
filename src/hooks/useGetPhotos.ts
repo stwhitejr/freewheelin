@@ -2,7 +2,7 @@ import  { useEffect, useState } from 'react';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 
 const useGetPhotos = () => {
-  const [downloadURL, setDownloadURL] = useState(null);
+  const [downloadURL, setDownloadURL] = useState<string | null>(null);
 
    useEffect( () => {
     (async () => {

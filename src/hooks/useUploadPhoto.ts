@@ -3,10 +3,10 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/
 
 const useUploadPhoto = () => {
   const [progress, setProgress] = useState(0);
-  const [fileUrl, setDownloadURL] = useState(null);
+  const [fileUrl, setDownloadURL] = useState<string | null>(null);
 
   return {
-    upload: useCallback((file) => {
+    upload: useCallback((file: File) => {
       const storage = getStorage();
       const storageRef = ref(storage, `images/${file.name}`);
 
