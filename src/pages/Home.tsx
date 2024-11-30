@@ -4,6 +4,8 @@ import {ParallaxBannerLayer} from 'react-scroll-parallax';
 import Logo from 'components/Logo';
 import {useContext} from 'react';
 import {AppContext} from 'App';
+import BannerLayer from 'components/BannerLayer';
+import BannerContent from 'components/BannerContent';
 
 const backgroundImageDesktop =
   'https://firebasestorage.googleapis.com/v0/b/freewheelin-5ff80.firebasestorage.app/o/home%2Fbackground_desktop.jpg?alt=media&token=3c81faed-e824-4c3c-a99a-e4fb42194df9';
@@ -26,97 +28,21 @@ const Home = () => {
         {
           content: (
             <>
-              <ParallaxBannerLayer
-                image={
-                  isMobile ? backgroundImageMobile : backgroundImageDesktop
-                }
-                speed={-50}
-                style={{backgroundSize: 'contain'}}
-              />
-              <ParallaxBannerLayer
-                image={isMobile ? bottomImageMobile : bottomImageDesktop}
-                speed={-10}
-                style={{backgroundSize: 'contain'}}
-              />
-              <ParallaxBannerLayer speed={0}>
-                <div
-                  style={{
-                    marginTop: isMobile ? '5vh' : '10vh',
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: isMobile ? '80vw' : '50vw',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Logo width={isMobile ? '100%' : '50%'} />
-
-                    <div
-                      style={{
-                        borderBottom: 'solid 1px #000',
-                        width: '30%',
-                        margin: '1rem auto',
-                        opacity: '.2',
-                      }}
-                    ></div>
-                    <div
-                      className="lora"
-                      style={{
-                        color: '#161515',
-                        opacity: '.6',
-                        fontSize: '1.3rem',
-                        letterSpacing: '-.05rem',
-                      }}
-                    >
-                      In every walk with nature,
-                      <br /> one receives far more than he seeks
-                      <div style={{fontSize: '.8rem', letterSpacing: '0', color: 'black'}}>John Muir</div>
-                    </div>
-                    {/* <button
-                      onClick={() => {
-                        navigate('/trips');
-                      }}
-                    >
-                      Go to trips
-                    </button> */}
-                  </div>
-                </div>
-              </ParallaxBannerLayer>
-            </>
-          ),
-        },
-        {
-          content: (
-            <>
-            <ParallaxBannerLayer
-              image={
-                isMobile ? backgroundImageMobile : backgroundImageDesktop
-              }
-              speed={-50}
-              style={{backgroundSize: 'contain'}}
-            />
-            <ParallaxBannerLayer
-              image={isMobile ? bottomImageMobile : bottomImageDesktop}
-              speed={-10}
-              style={{backgroundSize: 'contain'}}
-            />
-            <ParallaxBannerLayer speed={0}>
-              <div
-                style={{
-                  marginTop: isMobile ? '5vh' : '10vh',
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'center',
+              <BannerLayer
+                image={{
+                  mobile: backgroundImageMobile,
+                  desktop: backgroundImageDesktop,
                 }}
-              >
+                speed={-50}
+              />
+              <BannerLayer
+                image={{
+                  mobile: bottomImageMobile,
+                  desktop: bottomImageDesktop,
+                }}
+                speed={-10}
+              />
+              <BannerContent>
                 <div
                   style={{
                     width: isMobile ? '80vw' : '50vw',
@@ -144,19 +70,93 @@ const Home = () => {
                   >
                     In every walk with nature,
                     <br /> one receives far more than he seeks
-                    <div style={{fontSize: '.8rem', letterSpacing: '0', color: 'black'}}>John Muir</div>
+                    <div
+                      style={{
+                        fontSize: '.8rem',
+                        letterSpacing: '0',
+                        color: 'black',
+                      }}
+                    >
+                      John Muir
+                    </div>
                   </div>
                   {/* <button
-                    onClick={() => {
-                      navigate('/trips');
+                      onClick={() => {
+                        navigate('/trips');
+                      }}
+                    >
+                      Go to trips
+                    </button> */}
+                </div>
+              </BannerContent>
+            </>
+          ),
+        },
+        {
+          content: (
+            <>
+              <BannerLayer
+                image={{
+                  mobile: backgroundImageMobile,
+                  desktop: backgroundImageDesktop,
+                }}
+                speed={-50}
+              />
+              <BannerLayer
+                image={{
+                  mobile: bottomImageMobile,
+                  desktop: bottomImageDesktop,
+                }}
+                speed={-10}
+              />
+              <BannerContent>
+                <div
+                  style={{
+                    width: isMobile ? '80vw' : '50vw',
+                    textAlign: 'center',
+                  }}
+                >
+                  <Logo width={isMobile ? '100%' : '50%'} />
+
+                  <div
+                    style={{
+                      borderBottom: 'solid 1px #000',
+                      width: '30%',
+                      margin: '1rem auto',
+                      opacity: '.2',
+                    }}
+                  ></div>
+                  <div
+                    className="lora"
+                    style={{
+                      color: '#161515',
+                      opacity: '.6',
+                      fontSize: '1.3rem',
+                      letterSpacing: '-.05rem',
                     }}
                   >
-                    Go to trips
-                  </button> */}
+                    In every walk with nature,
+                    <br /> one receives far more than he seeks
+                    <div
+                      style={{
+                        fontSize: '.8rem',
+                        letterSpacing: '0',
+                        color: 'black',
+                      }}
+                    >
+                      John Muir
+                    </div>
+                  </div>
+                  {/* <button
+                      onClick={() => {
+                        navigate('/trips');
+                      }}
+                    >
+                      Go to trips
+                    </button> */}
                 </div>
-              </div>
-            </ParallaxBannerLayer>
-          </>
+              </BannerContent>
+            </>
           ),
         },
       ]}
