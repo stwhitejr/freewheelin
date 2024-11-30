@@ -1,6 +1,5 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Home from './pages/Home';
-import Trips from './pages/Trips';
 import Upload from './pages/Upload';
 import Trip from 'pages/Trip';
 import 'App.css';
@@ -40,7 +39,6 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/trips" element={<Trips />} />
           <Route path="/trip/:tripId" element={<Trip />}>
             <Route path="entry/:entryId" />
           </Route>

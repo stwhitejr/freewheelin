@@ -5,7 +5,6 @@ import {useContext, useState} from 'react';
 import {AppContext} from 'App';
 import BannerLayer from 'components/BannerLayer';
 import BannerContent from 'components/BannerContent';
-import Trips from './Trips';
 import useTrips from 'hooks/useTrips';
 import Banner from 'components/Banner';
 import Header from 'components/Header';
@@ -101,9 +100,10 @@ const Home = () => {
           <Banner>
             <BannerLayer
               image={{
-                desktop: trip.photo,
+                desktop: trip.photoDesktop,
+                mobile: trip.photoMobile,
               }}
-              speed={-10}
+              speed={-30}
             />
             <BannerContent alignment="center">
               <div

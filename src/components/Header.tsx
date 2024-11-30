@@ -15,19 +15,23 @@ const Header = (props: HeaderProps) => {
         top: 0,
         left: 0,
         right: 0,
-        background: '#eff5f6',
-        height: '50px',
+        background: 'white',
+        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+        height: '40px',
         zIndex: 2,
         transition: 'opacity .3s',
         opacity: props.isVisible ? 1 : 0,
         justifyContent: 'center',
         display: 'flex',
-        // alignItems: 'center'
-        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+        alignItems: 'center',
       }}
     >
-      <Logo height="55px" />
-      <img src={vanIcon} alt="Van Life" style={{height: '45px', paddingTop: '10px', paddingLeft: '40px'}} />
+      <Logo height="30px" />
+      <img
+        src={vanIcon}
+        alt="Van Life"
+        style={{height: '40px', paddingLeft: '20px'}}
+      />
     </div>
   );
 };
