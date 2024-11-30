@@ -3,7 +3,7 @@ import {ParallaxBanner, ParallaxProvider} from 'react-scroll-parallax';
 import Header from './Header';
 
 interface Section {
-  background: {
+  background?: {
     desktop: string;
     mobile: string;
   };
@@ -33,7 +33,8 @@ const PageWrapper = (props: PageWrapperProps) => {
           <ParallaxBanner
             style={{
               aspectRatio: '2 / 1',
-              background: section.background.desktop,
+              background: section.background?.desktop,
+              height: '100vh',
             }}
           >
             {section.content}

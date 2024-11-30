@@ -2,55 +2,52 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Home from './pages/Home';
 import Trips from './pages/Trips';
 import Upload from './pages/Upload';
-// import {useEffect} from 'react';
-// import {collection, doc, getDoc, getDocs} from 'firebase/firestore';
-// import {db} from './firebase';
+import Trip from 'pages/Trip';
+import 'App.css';
+import {createContext, useEffect, useMemo, useState} from 'react';
+
+const MOBILE_THRESHOLD = 768;
+
+export const AppContext = createContext<{isMobile: boolean}>({
+  isMobile: false,
+});
 
 const App = () => {
-  // useEffect(() => {
-    // const fetchData = async () => {
-      // Basic collection example - nothing about sub collections are returned
-      // const tripsCollection = collection(db, 'trip');
-      // const querySnapshot = await getDocs(tripsCollection);
-      // const documents = querySnapshot.docs.map((doc) => ({
-      //   ...doc.data(),
-      //   id: doc.id,
-      // }));
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
-      // Accessing doc directly with known id
-      // const tripEntry = doc(tripsCollection, 'Aeg9FaOHdKJFfPawFVnO');
-      // const snap = await getDoc(tripEntry);
-      // console.log(snap.data());
+  const isMobile = useMemo(
+    () => windowSize.width <= MOBILE_THRESHOLD,
+    [windowSize]
+  );
 
-      // Subcollection example
-      // const entriesCollection = collection(
-      //   tripsCollection,
-      //   documents[0].id,
-      //   'entries'
-      // );
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
 
-      // const query2 = await getDocs(entriesCollection);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-      // const entries = query2.docs.map((doc) => ({
-      //   ...doc.data(),
-      //   id: doc.id,
-      // }));
-
-      // resolving ref example
-      // const refSnapsot = await getDoc(documents[0].entries[0]);
-      // console.log('ref', refSnapsot.data());
-  //   };
-
-  //   fetchData();
-  // }, []);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/trips" element={<Trips />} />
-        <Route path="/upload" element={<Upload />} />
-      </Routes>
-    </BrowserRouter>
+    <AppContext.Provider value={{isMobile}}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/trips" element={<Trips />} />
+          <Route path="/trip/:tripId" element={<Trip />}>
+            <Route path="entry/:entryId" />
+          </Route>
+          <Route path="/upload" element={<Upload />} />
+        </Routes>
+      </BrowserRouter>
+    </AppContext.Provider>
   );
 };
 
