@@ -6,7 +6,7 @@ import Trip from 'pages/Trip';
 import 'App.css';
 import {createContext, useEffect, useMemo, useState} from 'react';
 
-const MOBILE_THRESHOLD = 768;
+const MOBILE_THRESHOLD = 700;
 
 export const AppContext = createContext<{isMobile: boolean}>({
   isMobile: false,

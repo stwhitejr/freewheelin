@@ -1,19 +1,8 @@
 import {ReactNode} from 'react';
-import {ParallaxBanner, ParallaxProvider} from 'react-scroll-parallax';
-import Header from './Header';
-
-interface Section {
-  background?: {
-    desktop: string;
-    mobile: string;
-  };
-  content: ReactNode;
-  speed?: number;
-}
+import {ParallaxProvider} from 'react-scroll-parallax';
 
 export interface PageWrapperProps {
-  sections: Section[];
-  includeHeader?: boolean;
+  children: ReactNode;
 }
 
 const PageWrapper = (props: PageWrapperProps) => {
@@ -26,21 +15,7 @@ const PageWrapper = (props: PageWrapperProps) => {
         alignItems: 'center',
       }}
     >
-      {props.includeHeader && <Header />}
-
-      <ParallaxProvider>
-        {props.sections.map((section) => (
-          <ParallaxBanner
-            style={{
-              aspectRatio: '2 / 1',
-              background: section.background?.desktop,
-              height: '100vh',
-            }}
-          >
-            {section.content}
-          </ParallaxBanner>
-        ))}
-      </ParallaxProvider>
+      <ParallaxProvider>{props.children} </ParallaxProvider>
     </div>
   );
 };

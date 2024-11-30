@@ -1,11 +1,14 @@
 import {useNavigate} from 'react-router-dom';
 import PageWrapper from '../components/PageWrapper';
-import {ParallaxBannerLayer} from 'react-scroll-parallax';
 import Logo from 'components/Logo';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {AppContext} from 'App';
 import BannerLayer from 'components/BannerLayer';
 import BannerContent from 'components/BannerContent';
+import Trips from './Trips';
+import useTrips from 'hooks/useTrips';
+import Banner from 'components/Banner';
+import Header from 'components/Header';
 
 const backgroundImageDesktop =
   'https://firebasestorage.googleapis.com/v0/b/freewheelin-5ff80.firebasestorage.app/o/home%2Fbackground_desktop.jpg?alt=media&token=3c81faed-e824-4c3c-a99a-e4fb42194df9';
@@ -20,147 +23,129 @@ const bottomImageMobile =
   'https://firebasestorage.googleapis.com/v0/b/freewheelin-5ff80.firebasestorage.app/o/home%2Fbottom_mobile.png?alt=media&token=8314da6a-9355-4fff-b3d4-70e87bdd604c';
 
 const Home = () => {
+  const [showHeader, setShowHeader] = useState(false);
   const navigate = useNavigate();
+  const {trips, isLoading} = useTrips();
   const {isMobile} = useContext(AppContext);
   return (
-    <PageWrapper
-      sections={[
-        {
-          content: (
-            <>
-              <BannerLayer
-                image={{
-                  mobile: backgroundImageMobile,
-                  desktop: backgroundImageDesktop,
+    <PageWrapper>
+      <Header isVisible={showHeader} />
+      <Banner>
+        <BannerLayer
+          image={{
+            mobile: backgroundImageMobile,
+            desktop: backgroundImageDesktop,
+          }}
+          speed={-50}
+        />
+        <BannerLayer
+          image={{
+            mobile: bottomImageMobile,
+            desktop: bottomImageDesktop,
+          }}
+          speed={-10}
+        />
+        <BannerContent
+          onProgressChange={(progress) => {
+            if (progress >= 0.7) {
+              setShowHeader(true);
+            } else {
+              setShowHeader(false);
+            }
+          }}
+        >
+          <div
+            style={{
+              width: isMobile ? '80vw' : '50vw',
+              textAlign: 'center',
+            }}
+          >
+            <Logo width={isMobile ? '100%' : '50%'} />
+
+            <div
+              style={{
+                borderBottom: 'solid 1px #000',
+                width: '30%',
+                margin: '1rem auto',
+                opacity: '.2',
+              }}
+            ></div>
+            <div
+              className="lora"
+              style={{
+                color: '#161515',
+                opacity: '.6',
+                fontSize: '1.3rem',
+                letterSpacing: '-.05rem',
+                textShadow: '0px 0px 5px rgba(0,0,0,0.2)',
+              }}
+            >
+              In every walk with nature,
+              <br /> one receives far more than he seeks
+              <div
+                style={{
+                  fontSize: '.8rem',
+                  letterSpacing: '0',
+                  color: 'black',
                 }}
-                speed={-50}
-              />
-              <BannerLayer
-                image={{
-                  mobile: bottomImageMobile,
-                  desktop: bottomImageDesktop,
+              >
+                John Muir
+              </div>
+            </div>
+          </div>
+        </BannerContent>
+      </Banner>
+
+      {trips.map((trip) => {
+        return (
+          <Banner>
+            <BannerLayer
+              image={{
+                desktop: trip.photo,
+              }}
+              speed={-10}
+            />
+            <BannerContent alignment="center">
+              <div
+                style={{
+                  width: isMobile ? '80vw' : '50vw',
+                  textAlign: 'center',
                 }}
-                speed={-10}
-              />
-              <BannerContent>
+              >
                 <div
-                  style={{
-                    width: isMobile ? '80vw' : '50vw',
-                    textAlign: 'center',
+                  className="link"
+                  onClick={() => {
+                    navigate(`/trip/${trip.id}`);
                   }}
                 >
-                  <Logo width={isMobile ? '100%' : '50%'} />
-
-                  <div
-                    style={{
-                      borderBottom: 'solid 1px #000',
-                      width: '30%',
-                      margin: '1rem auto',
-                      opacity: '.2',
-                    }}
-                  ></div>
                   <div
                     className="lora"
                     style={{
-                      color: '#161515',
-                      opacity: '.6',
-                      fontSize: '1.3rem',
-                      letterSpacing: '-.05rem',
+                      fontWeight: '700',
+                      color: 'white',
+                      fontSize: '3rem',
+                      textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
                     }}
                   >
-                    In every walk with nature,
-                    <br /> one receives far more than he seeks
-                    <div
-                      style={{
-                        fontSize: '.8rem',
-                        letterSpacing: '0',
-                        color: 'black',
-                      }}
-                    >
-                      John Muir
-                    </div>
+                    {trip.name}
                   </div>
-                  {/* <button
-                      onClick={() => {
-                        navigate('/trips');
-                      }}
-                    >
-                      Go to trips
-                    </button> */}
-                </div>
-              </BannerContent>
-            </>
-          ),
-        },
-        {
-          content: (
-            <>
-              <BannerLayer
-                image={{
-                  mobile: backgroundImageMobile,
-                  desktop: backgroundImageDesktop,
-                }}
-                speed={-50}
-              />
-              <BannerLayer
-                image={{
-                  mobile: bottomImageMobile,
-                  desktop: bottomImageDesktop,
-                }}
-                speed={-10}
-              />
-              <BannerContent>
-                <div
-                  style={{
-                    width: isMobile ? '80vw' : '50vw',
-                    textAlign: 'center',
-                  }}
-                >
-                  <Logo width={isMobile ? '100%' : '50%'} />
-
                   <div
+                    className="great-vibes-regular"
                     style={{
-                      borderBottom: 'solid 1px #000',
-                      width: '30%',
-                      margin: '1rem auto',
-                      opacity: '.2',
-                    }}
-                  ></div>
-                  <div
-                    className="lora"
-                    style={{
-                      color: '#161515',
-                      opacity: '.6',
-                      fontSize: '1.3rem',
-                      letterSpacing: '-.05rem',
+                      color: 'white',
+                      fontSize: '2rem',
+                      textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
                     }}
                   >
-                    In every walk with nature,
-                    <br /> one receives far more than he seeks
-                    <div
-                      style={{
-                        fontSize: '.8rem',
-                        letterSpacing: '0',
-                        color: 'black',
-                      }}
-                    >
-                      John Muir
-                    </div>
+                    {trip.description}
                   </div>
-                  {/* <button
-                      onClick={() => {
-                        navigate('/trips');
-                      }}
-                    >
-                      Go to trips
-                    </button> */}
                 </div>
-              </BannerContent>
-            </>
-          ),
-        },
-      ]}
-    />
+              </div>
+            </BannerContent>
+          </Banner>
+        );
+      })}
+    </PageWrapper>
   );
 };
 

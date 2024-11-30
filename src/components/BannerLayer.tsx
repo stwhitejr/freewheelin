@@ -1,27 +1,25 @@
 import {AppContext} from 'App';
-import {useContext} from 'react';
+import {ComponentProps, useContext} from 'react';
 import {ParallaxBannerLayer} from 'react-scroll-parallax';
 
-export interface BannerLayerProps {
-  image: {
+export interface BannerLayerProps
+  extends Omit<ComponentProps<typeof ParallaxBannerLayer>, 'image'> {
+  image?: {
     desktop: string;
     mobile?: string;
   };
-  speed?: number;
   backgroundSize?: string;
 }
 
-const BannerLayer = (props: BannerLayerProps) => {
+const BannerLayer = ({image, backgroundSize, ...rest}: BannerLayerProps) => {
   const {isMobile} = useContext(AppContext);
   return (
     <ParallaxBannerLayer
-      image={
-        isMobile && props.image.mobile
-          ? props.image.mobile
-          : props.image.desktop
-      }
-      speed={props.speed}
-      // style={{backgroundSize: props.backgroundSize || 'contain'}}
+      {...rest}
+      {...(image
+        ? {image: isMobile && image.mobile ? image.mobile : image.desktop}
+        : {})}
+      style={{backgroundSize: backgroundSize || 'contain'}}
     />
   );
 };

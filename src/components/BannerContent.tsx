@@ -1,29 +1,42 @@
 import {AppContext} from 'App';
 import {ReactNode, useContext} from 'react';
-import {ParallaxBannerLayer} from 'react-scroll-parallax';
+import BannerLayer, {BannerLayerProps} from './BannerLayer';
 
-export interface BannerContentProps {
+export interface BannerContentProps extends BannerLayerProps {
   children: ReactNode;
-  speed?: number;
+  alignment?: 'top' | 'center';
 }
 
-const BannerContent = ({children, speed}: BannerContentProps) => {
+const BannerContent = ({
+  children,
+  alignment = 'top',
+  ...rest
+}: BannerContentProps) => {
   const {isMobile} = useContext(AppContext);
+
+  let alignmentProps: Record<string, any> = {
+    marginTop: isMobile ? '5vh' : '10vh',
+    alignItems: 'flex-start',
+  };
+  if (alignment === 'center') {
+    alignmentProps = {
+      alignItems: 'center',
+    };
+  }
   return (
-    <ParallaxBannerLayer speed={speed}>
+    <BannerLayer {...rest}>
       <div
         style={{
-          marginTop: isMobile ? '5vh' : '10vh',
           width: '100%',
           height: '100%',
           display: 'flex',
-          alignItems: 'flex-start',
           justifyContent: 'center',
+          ...alignmentProps,
         }}
       >
         {children}
       </div>
-    </ParallaxBannerLayer>
+    </BannerLayer>
   );
 };
 
