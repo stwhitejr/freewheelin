@@ -19,7 +19,7 @@ const BannerLayer = ({image, backgroundSize, ...rest}: BannerLayerProps) => {
       {...(image
         ? {image: isMobile && image.mobile ? image.mobile : image.desktop}
         : {})}
-      style={{backgroundSize: backgroundSize || 'contain'}}
+      style={{backgroundSize: backgroundSize || 'cover'}}
     />
   );
 };

@@ -22,8 +22,4 @@
 }
 .link {
   cursor: pointer;
-  opacity: .8;
-}
-.link:hover {
-  opacity: 1;
 }

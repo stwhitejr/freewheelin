@@ -1,9 +1,7 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Home from './pages/Home';
-import Upload from './pages/Upload';
-import Trip from 'pages/Trip';
 import 'App.css';
 import {createContext, useEffect, useMemo, useState} from 'react';
+import {BrowserRouter} from 'react-router-dom';
 
 const MOBILE_THRESHOLD = 700;
 
@@ -35,17 +33,11 @@ const App = () => {
   }, []);
 
   return (
-    <AppContext.Provider value={{isMobile}}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/trip/:tripId" element={<Trip />}>
-            <Route path="entry/:entryId" />
-          </Route>
-          <Route path="/upload" element={<Upload />} />
-        </Routes>
-      </BrowserRouter>
-    </AppContext.Provider>
+    <BrowserRouter>
+      <AppContext.Provider value={{isMobile}}>
+        <Home />
+      </AppContext.Provider>
+    </BrowserRouter>
   );
 };
 

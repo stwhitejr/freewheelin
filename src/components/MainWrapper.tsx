@@ -1,11 +1,11 @@
 import {ReactNode} from 'react';
 import {ParallaxProvider} from 'react-scroll-parallax';
 
-export interface PageWrapperProps {
+export interface MainWrapperProps {
   children: ReactNode;
 }
 
-const PageWrapper = (props: PageWrapperProps) => {
+const MainWrapper = (props: MainWrapperProps) => {
   return (
     <div
       style={{
@@ -20,4 +20,4 @@ const PageWrapper = (props: PageWrapperProps) => {
   );
 };
 
-export default PageWrapper;
+export default MainWrapper;

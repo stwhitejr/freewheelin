@@ -1,5 +1,5 @@
-import {useNavigate} from 'react-router-dom';
-import PageWrapper from '../components/PageWrapper';
+import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import MainWrapper from '../components/MainWrapper';
 import Logo from 'components/Logo';
 import {useContext, useState} from 'react';
 import {AppContext} from 'App';
@@ -8,6 +8,8 @@ import BannerContent from 'components/BannerContent';
 import useTrips from 'hooks/useTrips';
 import Banner from 'components/Banner';
 import Header from 'components/Header';
+import Upload from './Upload';
+import Trip from './Trip';
 
 const backgroundImageDesktop =
   'https://firebasestorage.googleapis.com/v0/b/freewheelin-5ff80.firebasestorage.app/o/home%2Fbackground_desktop.jpg?alt=media&token=3c81faed-e824-4c3c-a99a-e4fb42194df9';
@@ -26,126 +28,149 @@ const Home = () => {
   const navigate = useNavigate();
   const {trips, isLoading} = useTrips();
   const {isMobile} = useContext(AppContext);
-  return (
-    <PageWrapper>
-      <Header isVisible={showHeader} />
-      <Banner>
-        <BannerLayer
-          image={{
-            mobile: backgroundImageMobile,
-            desktop: backgroundImageDesktop,
+
+  const hero = (
+    <BannerContent
+      // speed={-20}
+      onProgressChange={(progress) => {
+        if (progress >= 0.7) {
+          setShowHeader(true);
+        } else {
+          setShowHeader(false);
+        }
+      }}
+    >
+      <div
+        style={{
+          width: isMobile ? '90vw' : '50vw',
+          textAlign: 'center',
+        }}
+      >
+        <Logo width={isMobile ? '100%' : '50%'} />
+
+        <div
+          style={{
+            borderBottom: 'solid 1px #000',
+            width: '30%',
+            margin: '1rem auto',
+            opacity: '.2',
           }}
-          speed={-50}
-        />
-        <BannerLayer
-          image={{
-            mobile: bottomImageMobile,
-            desktop: bottomImageDesktop,
-          }}
-          speed={-10}
-        />
-        <BannerContent
-          onProgressChange={(progress) => {
-            if (progress >= 0.7) {
-              setShowHeader(true);
-            } else {
-              setShowHeader(false);
-            }
+        ></div>
+        <div
+          className="lora"
+          style={{
+            color: '#161515',
+            opacity: '.6',
+            fontSize: '1.3rem',
+            letterSpacing: '-.05rem',
+            textShadow: '0px 0px 5px rgba(0,0,0,0.2)',
           }}
         >
+          In every walk with nature,
+          <br /> one receives far more than he seeks
           <div
             style={{
-              width: isMobile ? '80vw' : '50vw',
-              textAlign: 'center',
+              fontSize: '.8rem',
+              letterSpacing: '0',
+              color: 'black',
             }}
           >
-            <Logo width={isMobile ? '100%' : '50%'} />
-
-            <div
-              style={{
-                borderBottom: 'solid 1px #000',
-                width: '30%',
-                margin: '1rem auto',
-                opacity: '.2',
-              }}
-            ></div>
-            <div
-              className="lora"
-              style={{
-                color: '#161515',
-                opacity: '.6',
-                fontSize: '1.3rem',
-                letterSpacing: '-.05rem',
-                textShadow: '0px 0px 5px rgba(0,0,0,0.2)',
-              }}
-            >
-              In every walk with nature,
-              <br /> one receives far more than he seeks
-              <div
-                style={{
-                  fontSize: '.8rem',
-                  letterSpacing: '0',
-                  color: 'black',
-                }}
-              >
-                John Muir
-              </div>
-            </div>
+            John Muir
           </div>
-        </BannerContent>
-      </Banner>
+        </div>
+      </div>
+    </BannerContent>
+  );
+  return (
+    <MainWrapper>
+      <Header isVisible={showHeader} />
 
-      {trips.map((trip) => {
-        return (
-          <Banner>
-            <BannerLayer
-              image={{
-                desktop: trip.photoDesktop,
-                mobile: trip.photoMobile,
-              }}
-              speed={-30}
-            />
-            <BannerContent alignment="center">
-              <div
-                style={{
-                  width: isMobile ? '80vw' : '50vw',
-                  textAlign: 'center',
-                }}
-              >
-                <div
-                  className="link"
-                  onClick={() => {
-                    navigate(`/trip/${trip.id}`);
+      <Routes>
+        <Route path="/trip/:tripId" element={<Trip />}>
+          <Route path="entry/:entryId" />
+        </Route>
+        <Route path="/upload" element={<Upload />} />
+
+        <Route
+          path="/"
+          element={
+            <>
+              <Banner>
+                <BannerLayer
+                  image={{
+                    mobile: backgroundImageMobile,
+                    desktop: backgroundImageDesktop,
                   }}
-                >
-                  <div
-                    className="lora"
-                    style={{
-                      fontWeight: '700',
-                      color: 'white',
-                      fontSize: '3rem',
-                      textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
-                    }}
-                  >
-                    {trip.name}
-                  </div>
-                  <div
-                    className="great-vibes-regular"
-                    style={{
-                      color: 'white',
-                      fontSize: '2rem',
-                      textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
-                    }}
-                  >
-                    {trip.description}
-                  </div>
-                </div>
-              </div>
-            </BannerContent>
-          </Banner>
-        );
-      })}
-    </PageWrapper>
+                  speed={-30}
+                  backgroundSize={!isMobile ? 'cover' : 'contain'}
+                />
+                {!isMobile && hero}
+                <BannerLayer
+                  speed={isMobile ? -10 : 20}
+                  image={{
+                    mobile: bottomImageMobile,
+                    desktop: bottomImageDesktop,
+                  }}
+                  backgroundSize={!isMobile ? 'cover' : 'contain'}
+                />
+                {isMobile && hero}
+              </Banner>
+
+              {trips.map((trip) => {
+                return (
+                  <Banner>
+                    <BannerLayer
+                      image={{
+                        desktop: trip.photoDesktop,
+                        mobile: trip.photoMobile,
+                      }}
+                      speed={-30}
+                    />
+                    <BannerContent alignment="center">
+                      <div
+                        style={{
+                          width: isMobile ? '80vw' : '50vw',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <div
+                          className="link"
+                          onClick={() => {
+                            navigate(`/trip/${trip.id}`);
+                          }}
+                        >
+                          <div
+                            className="lora"
+                            style={{
+                              fontWeight: '700',
+                              color: 'white',
+                              fontSize: '3.5rem',
+                              textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
+                            }}
+                          >
+                            {trip.name}
+                          </div>
+                          <div
+                            className="great-vibes-regular"
+                            style={{
+                              color: 'white',
+                              fontSize: '1.5rem',
+                              textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
+                            }}
+                          >
+                            {trip.description}
+                          </div>
+                        </div>
+                      </div>
+                    </BannerContent>
+                  </Banner>
+                );
+              })}
+            </>
+          }
+        />
+      </Routes>
+    </MainWrapper>
   );
 };
 
