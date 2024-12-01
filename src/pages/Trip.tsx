@@ -6,6 +6,7 @@ import {Route, Routes, useParams} from 'react-router-dom';
 import Intro from 'components/Intro';
 import Entries from 'components/Entries';
 import Entry from './Entry';
+import PhotoGallery from 'components/PhotoGallery';
 
 export interface TripProps {}
 
@@ -70,18 +71,21 @@ const TripComponent = (props: TripProps) => {
       ) : (
         <>
           <Nav />
-          <Routes>
-            <Route path="entry/:entryId" element={<Entry />} />
-            <Route
-              path="*"
-              element={
-                <>
-                  <Intro title={trip.name} description={trip.description} />
-                  <Entries />
-                </>
-              }
-            />
-          </Routes>
+          {entries.length > 0 && (
+            <Routes>
+              <Route path="entry/:entryId" element={<Entry />} />
+              <Route
+                path="*"
+                element={
+                  <>
+                    <Intro title={trip.name} description={trip.description} />
+                    <Entries />
+                  </>
+                }
+              />
+            </Routes>
+          )}
+          <PhotoGallery />
         </>
       )}
     </TripContext.Provider>

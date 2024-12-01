@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import MainWrapper from '../components/MainWrapper';
 import Logo from 'components/Logo';
 import {useContext, useState} from 'react';
@@ -7,7 +7,6 @@ import BannerLayer from 'components/BannerLayer';
 import BannerContent from 'components/BannerContent';
 import useTrips from 'hooks/useTrips';
 import Banner from 'components/Banner';
-import Header from 'components/Header';
 import Upload from './Upload';
 import Trip from './Trip';
 
@@ -83,7 +82,7 @@ const Home = () => {
   );
   return (
     <MainWrapper>
-      <Header isVisible={showHeader} />
+      {/*<Header isVisible={showHeader} />*/}
 
       <Routes>
         <Route path="/trip/:tripId" element={<Trip />}>
@@ -145,7 +144,7 @@ const Home = () => {
                               fontWeight: '700',
                               color: 'white',
                               fontSize: '3.5rem',
-                              textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
+                              textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
                             }}
                           >
                             {trip.name}
@@ -155,7 +154,7 @@ const Home = () => {
                             style={{
                               color: 'white',
                               fontSize: '1.5rem',
-                              textShadow: '2px 2px 2px rgba(0,0,0,0.2)',
+                              textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
                             }}
                           >
                             {trip.description}

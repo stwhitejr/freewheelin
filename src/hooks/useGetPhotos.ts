@@ -10,7 +10,10 @@ const useGetPhotos = () => {
   useEffect(() => {
     (async () => {
       const storage = getStorage();
-      const storageRef = ref(storage, `trips/${tripId}/${entryId}`);
+      const storageRef = ref(
+        storage,
+        `trips/${tripId}${entryId ? `/${entryId}` : ''}`
+      );
 
       // Create an array to store the download URLs
       const downloadUrls = [];
