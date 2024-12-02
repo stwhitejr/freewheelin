@@ -1,6 +1,5 @@
 import {useContext, useMemo, useState} from 'react';
 import useGetPhotos from '../hooks/useGetPhotos';
-import 'react-photo-album/masonry.css';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
