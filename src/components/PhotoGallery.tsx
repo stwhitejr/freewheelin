@@ -23,11 +23,9 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     const groupSize = isMobile ? 1 : 2;
     const photos = (allPhotos.length > 0 ? allPhotos : minPhotos).map(
       (photo, index) => {
-        // const mod = index % 4;
         return {
           src: photo,
-          // height: mod === 1 ? 720 : mod === 2 ? 1440 : mod === 3 ? 810 : 160,
-          // width: 1080,
+          originalIndex: index,
         };
       }
     );
@@ -41,10 +39,7 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
           resultArray[chunkIndex] = [];
         }
 
-        resultArray[chunkIndex].push({
-          ...item,
-          originalIndex: index,
-        });
+        resultArray[chunkIndex].push(item);
 
         return resultArray;
       }, []),
