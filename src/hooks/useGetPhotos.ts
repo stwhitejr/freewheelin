@@ -1,5 +1,11 @@
 import {useEffect, useState} from 'react';
-import {getStorage, ref, getDownloadURL, listAll} from 'firebase/storage';
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  listAll,
+  getMetadata,
+} from 'firebase/storage';
 import {useParams} from 'react-router-dom';
 
 const useGetPhotos = () => {
@@ -32,6 +38,9 @@ const useGetPhotos = () => {
             const waitForSlot = () => {
               if (pendingRequests < maxConcurrentRequests) {
                 pendingRequests++;
+                // getMetadata(file).then((metadata) => {
+                //   console.log(metadata);
+                // });
                 getDownloadURL(file)
                   .then((url) => {
                     downloadUrls.push(url);
