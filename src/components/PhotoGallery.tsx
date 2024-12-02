@@ -13,6 +13,14 @@ import BannerLayer from './BannerLayer';
 
 export interface PhotoGalleryProps {}
 
+const speedList = [-10, 0, 10, 15, -15];
+
+const getSpeed = () => {
+  return speedList[
+    Math.floor(Math.random() * (speedList.length - 1 - 0 + 1) + 0)
+  ];
+};
+
 const PhotoGallery = (props: PhotoGalleryProps) => {
   const {isMobile} = useContext(AppContext);
   const {allPhotos, minPhotos} = useGetPhotos();
@@ -58,7 +66,10 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
       >
         {photoGroups.map((photos) => {
           return (
-            <Banner key={photos[0].src}>
+            <Banner
+              key={photos[0].src}
+              {...(isMobile ? {style: {height: '33vh'}} : {})}
+            >
               {photos.map((photo, index) => {
                 const isOdd = index % 2 === 1;
                 return (
@@ -68,7 +79,7 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
                     image={{
                       desktop: photo.src,
                     }}
-                    speed={Math.floor(Math.random() * (30 - -30 + 1) + -30)}
+                    speed={getSpeed()}
                     style={{
                       cursor: 'pointer',
                       ...(isMobile
